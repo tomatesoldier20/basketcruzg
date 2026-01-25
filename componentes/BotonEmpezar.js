@@ -1,9 +1,9 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const BotonEmpezar = () => {
+const BotonEmpezar = ({ onPress }) => {
   return (
-    <TouchableOpacity style={styles.boton}>
+    <TouchableOpacity style={styles.boton} onPress={onPress}>
       <Text style={styles.texto}>Empezar partido</Text>
     </TouchableOpacity>
   );

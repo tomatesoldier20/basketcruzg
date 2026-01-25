@@ -3,12 +3,14 @@ import { StyleSheet, View, SafeAreaView } from 'react-native';
 import Equipo from './componentes/Equipo';
 import VS from './componentes/VS';
 import BotonEmpezar from './componentes/BotonEmpezar';
+import PantallaJuego from './componentes/PantallaJuego';
 import equiposData from './equipos.json';
 
 export default function App() {
   const [indiceLocal, setIndiceLocal] = useState(0);
   const [indiceVisitante, setIndiceVisitante] = useState(1);
   const [equipos, setEquipos] = useState([]);
+  const [pantallaActual, setPantallaActual] = useState('seleccion');
 
   useEffect(() => {
     setEquipos(equiposData);
@@ -46,6 +48,24 @@ export default function App() {
     setIndiceVisitante(nuevoIndice);
   };
 
+  const handleEmpezarPartido = () => {
+    setPantallaActual('juego');
+  };
+
+  const handleVolver = () => {
+    setPantallaActual('seleccion');
+  };
+
+  if (pantallaActual === 'juego') {
+    return (
+      <PantallaJuego
+        equipoLocal={equipos[indiceLocal]}
+        equipoVisitante={equipos[indiceVisitante]}
+        onVolver={handleVolver}
+      />
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.matchContainer}>
@@ -67,7 +87,7 @@ export default function App() {
           />
         </View>
         
-        <BotonEmpezar />
+        <BotonEmpezar onPress={handleEmpezarPartido} />
       </View>
     </SafeAreaView>
   );
