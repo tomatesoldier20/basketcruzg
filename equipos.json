@@ -1,0 +1,197 @@
+[
+  {
+    "id": 1,
+    "nombre": "Chicago Bulls",
+    "imagen": "./imagenes/chicago_bulls.png",
+    "jugadores": [
+      "Michael Jordan",
+      "Scottie Pippen",
+      "Dennis Rodman",
+      "Toni Kukoč",
+      "Ron Harper",
+      "Steve Kerr",
+      "Luc Longley",
+      "Bill Wennington",
+      "Jud Buechler",
+      "Randy Brown",
+      "Jason Caffey",
+      "Dickey Simpkins",
+      "James Edwards",
+      "John Salley",
+      "Jack Haley"
+    ]
+  },
+  {
+    "id": 2,
+    "nombre": "Los Angeles Lakers",
+    "imagen": "./imagenes/los_angeles_lakers.png",
+    "jugadores": [
+      "Shaquille O'Neal",
+      "Eddie Jones",
+      "Nick Van Exel",
+      "Elden Campbell",
+      "Cedric Ceballos",
+      "George Lynch",
+      "Anthony Peeler",
+      "Vlade Divac",
+      "Corie Blount",
+      "Travis Knight",
+      "Derek Fisher",
+      "Kobe Bryant"
+    ]
+  },
+  {
+    "id": 3,
+    "nombre": "Seattle SuperSonics",
+    "imagen": "./imagenes/Seattle_SuperSonics_logo.png",
+    "jugadores": [
+      "Gary Payton",
+      "Shawn Kemp",
+      "Detlef Schrempf",
+      "Hersey Hawkins",
+      "Sam Perkins",
+      "Vincent Askew",
+      "Frank Brickowski",
+      "David Wingate",
+      "Greg Anthony",
+      "Ervin Johnson",
+      "McGee",
+      "Craig Ehlo"
+    ]
+  },
+  {
+    "id": 4,
+    "nombre": "Orlando Magic",
+    "imagen": "./imagenes/Orlando_Magic_logo.png",
+    "jugadores": [
+      "Shaquille O'Neal",
+      "Anfernee Hardaway",
+      "Horace Grant",
+      "Dennis Scott",
+      "Nick Anderson",
+      "Donald Royal",
+      "Brian Shaw",
+      "Jeff Turner",
+      "Anthony Bowie",
+      "Jon Koncak",
+      "Brook Steppe",
+      "Geoffrey Clark",
+      "Greg Kite"
+    ]
+  },
+  {
+    "id": 5,
+    "nombre": "Utah Jazz",
+    "imagen": "./imagenes/utah_jazz.png",
+    "jugadores": [
+      "Karl Malone",
+      "John Stockton",
+      "Jeff Hornacek",
+      "Bryon Russell",
+      "Adam Keefe",
+      "Greg Ostertag",
+      "Chris Morris",
+      "Antoine Carr",
+      "Jamie Watson",
+      "David Benoit",
+      "Tom Chambers",
+      "Walt Williams"
+    ]
+  },
+  {
+    "id": 6,
+    "nombre": "Houston Rockets",
+    "imagen": "./imagenes/Houston-Rockets-Logo.png",
+    "jugadores": [
+      "Hakeem Olajuwon",
+      "Clyde Drexler",
+      "Charles Barkley",
+      "Mario Elie",
+      "Sam Cassell",
+      "Robert Horry",
+      "Kenny Smith",
+      "Chucky Brown",
+      "Otis Thorpe",
+      "Pete Chilcutt",
+      "Matt Bullard",
+      "Carl Herrera"
+    ]
+  },
+  {
+    "id": 7,
+    "nombre": "New York Knicks",
+    "imagen": "./imagenes/New_York_Knicks_logo.svg.png",
+    "jugadores": [
+      "Patrick Ewing",
+      "John Starks",
+      "Charles Oakley",
+      "Derek Harper",
+      "Anthony Mason",
+      "Hubert Davis",
+      "Charles Smith",
+      "Greg Anthony",
+      "Herb Williams",
+      "Monte Williams",
+      "Van Gundy",
+      "Don Nelson"
+    ]
+  },
+  {
+    "id": 8,
+    "nombre": "Detroit Pistons",
+    "imagen": "./imagenes/detroy_pistons.png",
+    "jugadores": [
+      "Grant Hill",
+      "Isiah Thomas",
+      "Joe Dumars",
+      "Dennis Rodman",
+      "Bill Laimbeer",
+      "Vinnie Johnson",
+      "Mark Aguirre",
+      "John Salley",
+      "James Edwards",
+      "Rick Mahorn",
+      "Adrian Dantley",
+      "Dan Roundfield"
+    ]
+  },
+  {
+    "id": 9,
+    "nombre": "Indiana Pacers",
+    "imagen": "./imagenes/Indiana_Pacers_logo.png",
+    "jugadores": [
+      "Reggie Miller",
+      "Rik Smits",
+      "Mark Jackson",
+      "Detlef Schrempf",
+      "Antonio Davis",
+      "Dale Davis",
+      "Haywoode Workman",
+      "Byron Scott",
+      "Jermaine O'Neal",
+      "Jalen Rose",
+      "Chris Mullin",
+      "Sam Mitchell"
+    ]
+  },
+  {
+    "id": 10,
+    "nombre": "Atlanta Hawks",
+    "imagen": "./imagenes/Atlanta_Hawks_logo.png",
+    "jugadores": [
+      "Dominique Wilkins",
+      "Doc Rivers",
+      "Kevin Willis",
+      "Mookie Blaylock",
+      "Stacey Augmon",
+      "Tom Chambers",
+      "Moses Malone",
+      "John Drew",
+      "Dan Roundfield",
+      "Eddie Johnson",
+      "Randy Wittman",
+      "Cliff Levingston"
+    ]
+  }
+  
+]
