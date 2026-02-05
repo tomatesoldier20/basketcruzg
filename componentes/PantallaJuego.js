@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, SafeAreaView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text, Image, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import JugadorCard from './JugadorCard';
 
 const imageMap = {
   './imagenes/chicago_bulls.png': require('../imagenes/chicago_bulls.png'),
@@ -14,21 +15,39 @@ const imageMap = {
   './imagenes/Seattle_SuperSonics_logo.png': require('../imagenes/Seattle_SuperSonics_logo.png'),
 };
 
-const PantallaJuego = ({ equipoLocal, equipoVisitante, onVolver }) => {
+const PantallaJuego = ({ equipoLocal, equipoVisitante, onVolver, onFinJuego }) => {
+  const [puntosJugadoresLocal, setPuntosJugadoresLocal] = useState({});
+  const [puntosJugadoresVisitante, setPuntosJugadoresVisitante] = useState({});
   const [puntosLocal, setPuntosLocal] = useState(0);
   const [puntosVisitante, setPuntosVisitante] = useState(0);
 
-  const handlePuntosLocal = (puntos) => {
-    setPuntosLocal(prev => prev + puntos);
+  useEffect(() => {
+    const puntosLocalTotales = Object.values(puntosJugadoresLocal).reduce((sum, pts) => sum + pts, 0);
+    setPuntosLocal(puntosLocalTotales);
+  }, [puntosJugadoresLocal]);
+
+  useEffect(() => {
+    const puntosVisitanteTotales = Object.values(puntosJugadoresVisitante).reduce((sum, pts) => sum + pts, 0);
+    setPuntosVisitante(puntosVisitanteTotales);
+  }, [puntosJugadoresVisitante]);
+
+  const handlePuntosJugadorLocal = (jugador, puntos) => {
+    setPuntosJugadoresLocal(prev => ({
+      ...prev,
+      [jugador]: (prev[jugador] || 0) + puntos
+    }));
   };
 
-  const handlePuntosVisitante = (puntos) => {
-    setPuntosVisitante(prev => prev + puntos);
+  const handlePuntosJugadorVisitante = (jugador, puntos) => {
+    setPuntosJugadoresVisitante(prev => ({
+      ...prev,
+      [jugador]: (prev[jugador] || 0) + puntos
+    }));
   };
 
   const handleReiniciar = () => {
-    setPuntosLocal(0);
-    setPuntosVisitante(0);
+    setPuntosJugadoresLocal({});
+    setPuntosJugadoresVisitante({});
   };
 
   return (
@@ -68,37 +87,42 @@ const PantallaJuego = ({ equipoLocal, equipoVisitante, onVolver }) => {
       </View>
 
       <View style={styles.controlesContainer}>
-        <View style={styles.equipoControles}>
-          <Text style={styles.nombreEquipo}>{equipoLocal.nombre}</Text>
-          <View style={styles.botonesPuntos}>
-            <TouchableOpacity style={[styles.botonPunto, styles.boton1]} onPress={() => handlePuntosLocal(1)}>
-              <Text style={styles.botonPuntoText}>+1</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.botonPunto, styles.boton2]} onPress={() => handlePuntosLocal(2)}>
-              <Text style={styles.botonPuntoText}>+2</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.botonPunto, styles.boton3]} onPress={() => handlePuntosLocal(3)}>
-              <Text style={styles.botonPuntoText}>+3</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.botonesAccionContainer}>
+          <TouchableOpacity style={styles.botonReiniciar} onPress={handleReiniciar}>
+            <Text style={styles.botonReiniciarText}>Reiniciar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.botonFinJuego} onPress={() => onFinJuego(puntosLocal, puntosVisitante, { local: puntosJugadoresLocal, visitante: puntosJugadoresVisitante })}>
+            <Text style={styles.botonFinJuegoText}>Fin del Juego</Text>
+          </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.botonReiniciar} onPress={handleReiniciar}>
-          <Text style={styles.botonReiniciarText}>Reiniciar</Text>
-        </TouchableOpacity>
+        <View style={styles.equiposContainer}>
+          <View style={styles.equipoJugadoresContainer}>
+            <Text style={styles.nombreEquipo}>{equipoLocal.nombre}</Text>
+            <ScrollView style={styles.jugadoresScroll} showsVerticalScrollIndicator={false}>
+              {equipoLocal.jugadores.map((jugador, index) => (
+                <JugadorCard
+                  key={index}
+                  nombre={jugador}
+                  puntos={puntosJugadoresLocal[jugador] || 0}
+                  onAgregarPuntos={(puntos) => handlePuntosJugadorLocal(jugador, puntos)}
+                />
+              ))}
+            </ScrollView>
+          </View>
 
-        <View style={styles.equipoControles}>
-          <Text style={styles.nombreEquipo}>{equipoVisitante.nombre}</Text>
-          <View style={styles.botonesPuntos}>
-            <TouchableOpacity style={[styles.botonPunto, styles.boton1]} onPress={() => handlePuntosVisitante(1)}>
-              <Text style={styles.botonPuntoText}>+1</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.botonPunto, styles.boton2]} onPress={() => handlePuntosVisitante(2)}>
-              <Text style={styles.botonPuntoText}>+2</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.botonPunto, styles.boton3]} onPress={() => handlePuntosVisitante(3)}>
-              <Text style={styles.botonPuntoText}>+3</Text>
-            </TouchableOpacity>
+          <View style={styles.equipoJugadoresContainer}>
+            <Text style={styles.nombreEquipo}>{equipoVisitante.nombre}</Text>
+            <ScrollView style={styles.jugadoresScroll} showsVerticalScrollIndicator={false}>
+              {equipoVisitante.jugadores.map((jugador, index) => (
+                <JugadorCard
+                  key={index}
+                  nombre={jugador}
+                  puntos={puntosJugadoresVisitante[jugador] || 0}
+                  onAgregarPuntos={(puntos) => handlePuntosJugadorVisitante(jugador, puntos)}
+                />
+              ))}
+            </ScrollView>
           </View>
         </View>
       </View>
@@ -127,16 +151,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   marcadorContainer: {
-    flex: 1,
+    flex: 0.8,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
   },
   titulo: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 30,
+    marginBottom: 15,
     textAlign: 'center',
   },
   marcador: {
@@ -145,8 +169,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: '100%',
     backgroundColor: 'white',
-    borderRadius: 15,
-    padding: 20,
+    borderRadius: 10,
+    padding: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -158,19 +182,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logoMarcador: {
-    width: 60,
-    height: 60,
-    marginBottom: 10,
+    width: 40,
+    height: 40,
+    marginBottom: 5,
   },
   nombreMarcador: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 5,
+    marginBottom: 3,
     textAlign: 'center',
   },
   puntos: {
-    fontSize: 36,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#007AFF',
   },
@@ -178,61 +202,68 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   vs: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#666',
   },
   controlesContainer: {
-    paddingHorizontal: 20,
-    paddingBottom: 30,
+    flex: 1,
+    flexDirection: 'column',
+    paddingHorizontal: 10,
+    paddingBottom: 10,
   },
-  equipoControles: {
-    alignItems: 'center',
-    marginVertical: 10,
+  equipoJugadoresContainer: {
+    flex: 1,
+    marginHorizontal: 5,
   },
-  nombreEquipo: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 15,
-  },
-  botonesPuntos: {
+  equiposContainer: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
     gap: 10,
   },
-  botonPunto: {
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    borderRadius: 10,
-    minWidth: 60,
-    alignItems: 'center',
-  },
-  boton1: {
-    backgroundColor: '#28a745',
-  },
-  boton2: {
-    backgroundColor: '#ffc107',
-  },
-  boton3: {
-    backgroundColor: '#dc3545',
-  },
-  botonPuntoText: {
-    color: 'white',
-    fontSize: 16,
+  nombreEquipo: {
+    fontSize: 14,
     fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 5,
+    textAlign: 'center',
+  },
+  jugadoresScroll: {
+    flex: 1,
+  },
+
+  botonesAccionContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    gap: 10,
+    marginBottom: 10,
   },
   botonReiniciar: {
     backgroundColor: '#6c757d',
-    paddingHorizontal: 30,
-    paddingVertical: 12,
-    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    borderRadius: 6,
     alignItems: 'center',
-    marginVertical: 20,
+    flex: 1,
   },
   botonReiniciarText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  botonFinJuego: {
+    backgroundColor: '#dc3545',
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    borderRadius: 6,
+    alignItems: 'center',
+    flex: 1,
+  },
+  botonFinJuegoText: {
+    color: 'white',
+    fontSize: 12,
     fontWeight: 'bold',
   },
 });

@@ -4,6 +4,7 @@ import Equipo from './componentes/Equipo';
 import VS from './componentes/VS';
 import BotonEmpezar from './componentes/BotonEmpezar';
 import PantallaJuego from './componentes/PantallaJuego';
+import WinnerScreen from './componentes/WinnerScreen';
 import equiposData from './equipos.json';
 
 export default function App() {
@@ -11,6 +12,9 @@ export default function App() {
   const [indiceVisitante, setIndiceVisitante] = useState(1);
   const [equipos, setEquipos] = useState([]);
   const [pantallaActual, setPantallaActual] = useState('seleccion');
+  const [puntosLocal, setPuntosLocal] = useState(0);
+  const [puntosVisitante, setPuntosVisitante] = useState(0);
+  const [jugadoresConPuntos, setJugadoresConPuntos] = useState(null);
 
   useEffect(() => {
     setEquipos(equiposData);
@@ -54,6 +58,23 @@ export default function App() {
 
   const handleVolver = () => {
     setPantallaActual('seleccion');
+    setPuntosLocal(0);
+    setPuntosVisitante(0);
+    setJugadoresConPuntos(null);
+  };
+
+  const handleFinJuego = (puntosL, puntosV, jugadoresPuntos) => {
+    setPuntosLocal(puntosL);
+    setPuntosVisitante(puntosV);
+    setJugadoresConPuntos(jugadoresPuntos);
+    setPantallaActual('resultados');
+  };
+
+  const handleNuevoJuego = () => {
+    setPantallaActual('seleccion');
+    setPuntosLocal(0);
+    setPuntosVisitante(0);
+    setJugadoresConPuntos(null);
   };
 
   if (pantallaActual === 'juego') {
@@ -62,6 +83,21 @@ export default function App() {
         equipoLocal={equipos[indiceLocal]}
         equipoVisitante={equipos[indiceVisitante]}
         onVolver={handleVolver}
+        onFinJuego={handleFinJuego}
+      />
+    );
+  }
+
+  if (pantallaActual === 'resultados') {
+    return (
+      <WinnerScreen
+        equipoLocal={equipos[indiceLocal]}
+        equipoVisitante={equipos[indiceVisitante]}
+        puntosLocal={puntosLocal}
+        puntosVisitante={puntosVisitante}
+        jugadoresConPuntos={jugadoresConPuntos}
+        onVolver={handleVolver}
+        onNuevoJuego={handleNuevoJuego}
       />
     );
   }
