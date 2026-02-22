@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Image, StyleSheet, View, Text, TouchableOpacity, ScrollView, Modal } from 'react-native';
+import React from 'react';
+import { Image, StyleSheet, View, Text, ScrollView } from 'react-native';
 import BotonFlecha from './BotonFlecha';
 
 const imageMap = {
@@ -16,40 +16,22 @@ const imageMap = {
 };
 
 const Equipo = ({ nombre, imagen, onSiguiente, onAnterior, jugadores }) => {
-  const [mostrarPlantilla, setMostrarPlantilla] = useState(false);
-
   return (
     <View style={styles.container}>
       <Image source={imageMap[imagen] || require('../imagenes/chicago_bulls.png')} style={styles.logo} resizeMode="contain" />
-      <TouchableOpacity onPress={() => setMostrarPlantilla(true)}>
-        <Text style={styles.nombreEquipo}>{nombre}</Text>
-      </TouchableOpacity>
+      <Text style={styles.nombreEquipo}>{nombre}</Text>
       <View style={styles.botonesContainer}>
         <BotonFlecha direccion="<<" onPress={onAnterior} />
         <BotonFlecha direccion=">>" onPress={onSiguiente} />
       </View>
-
-      <Modal
-        visible={mostrarPlantilla}
-        animationType="slide"
-        onRequestClose={() => setMostrarPlantilla(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalHeader}>
-            <Text style={styles.modalTitle}>Plantilla - {nombre}</Text>
-            <TouchableOpacity onPress={() => setMostrarPlantilla(false)} style={styles.closeButton}>
-              <Text style={styles.closeButtonText}>✕</Text>
-            </TouchableOpacity>
+      <View style={styles.quintetoContainer}>
+        <Text style={styles.quintetoTitulo}>Plantilla</Text>
+        {jugadores && jugadores.slice(0, 5).map((jugador, index) => (
+          <View key={index} style={styles.jugadorItem}>
+            <Text style={styles.jugadorText}>{jugador}</Text>
           </View>
-          <ScrollView style={styles.jugadoresContainer}>
-            {jugadores && jugadores.map((jugador, index) => (
-              <View key={index} style={styles.jugadorItem}>
-                <Text style={styles.jugadorText}>{jugador}</Text>
-              </View>
-            ))}
-          </ScrollView>
-        </View>
-      </Modal>
+        ))}
+      </View>
     </View>
   );
 };
@@ -62,7 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
     margin: 5,
     borderRadius: 10,
-    padding: 15,
+    padding: 10,
     elevation: 3,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -71,66 +53,46 @@ const styles = StyleSheet.create({
     maxWidth: 140,
   },
   logo: {
-    width: 90,
-    height: 90,
+    width: 60,
+    height: 60,
   },
   nombreEquipo: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 'bold',
-    marginTop: 8,
+    marginTop: 5,
     color: '#333',
     textAlign: 'center',
     borderWidth: 1,
     borderColor: '#007AFF',
     borderRadius: 5,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingHorizontal: 6,
+    paddingVertical: 3,
     backgroundColor: '#f0f8ff',
   },
   botonesContainer: {
     flexDirection: 'row',
-    marginTop: 15,
+    marginTop: 10,
     justifyContent: 'center',
   },
-  modalContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: 50,
+  quintetoContainer: {
+    marginTop: 10,
+    width: '100%',
   },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  modalTitle: {
-    fontSize: 20,
+  quintetoTitulo: {
+    fontSize: 10,
     fontWeight: 'bold',
-    color: '#333',
-  },
-  closeButton: {
-    padding: 10,
-  },
-  closeButtonText: {
-    fontSize: 24,
     color: '#666',
-  },
-  jugadoresContainer: {
-    flex: 1,
-    paddingHorizontal: 20,
+    textAlign: 'center',
+    marginBottom: 5,
   },
   jugadorItem: {
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
-    backgroundColor: '#fafafa',
+    paddingVertical: 3,
+    paddingHorizontal: 5,
   },
   jugadorText: {
-    fontSize: 16,
+    fontSize: 10,
     color: '#333',
+    textAlign: 'center',
   },
 });
 

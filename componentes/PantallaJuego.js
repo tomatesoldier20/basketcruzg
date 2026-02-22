@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 import JugadorCard from './JugadorCard';
+import { calcularNuevoMarcador } from './Reglas';
 
 const imageMap = {
   './imagenes/chicago_bulls.png': require('../imagenes/chicago_bulls.png'),
@@ -34,14 +35,14 @@ const PantallaJuego = ({ equipoLocal, equipoVisitante, onVolver, onFinJuego }) =
   const handlePuntosJugadorLocal = (jugador, puntos) => {
     setPuntosJugadoresLocal(prev => ({
       ...prev,
-      [jugador]: (prev[jugador] || 0) + puntos
+      [jugador]: calcularNuevoMarcador(prev[jugador] || 0, puntos)
     }));
   };
 
   const handlePuntosJugadorVisitante = (jugador, puntos) => {
     setPuntosJugadoresVisitante(prev => ({
       ...prev,
-      [jugador]: (prev[jugador] || 0) + puntos
+      [jugador]: calcularNuevoMarcador(prev[jugador] || 0, puntos)
     }));
   };
 
@@ -100,7 +101,7 @@ const PantallaJuego = ({ equipoLocal, equipoVisitante, onVolver, onFinJuego }) =
           <View style={styles.equipoJugadoresContainer}>
             <Text style={styles.nombreEquipo}>{equipoLocal.nombre}</Text>
             <ScrollView style={styles.jugadoresScroll} showsVerticalScrollIndicator={false}>
-              {equipoLocal.jugadores.map((jugador, index) => (
+              {equipoLocal.jugadores.slice(0, 5).map((jugador, index) => (
                 <JugadorCard
                   key={index}
                   nombre={jugador}
@@ -114,7 +115,7 @@ const PantallaJuego = ({ equipoLocal, equipoVisitante, onVolver, onFinJuego }) =
           <View style={styles.equipoJugadoresContainer}>
             <Text style={styles.nombreEquipo}>{equipoVisitante.nombre}</Text>
             <ScrollView style={styles.jugadoresScroll} showsVerticalScrollIndicator={false}>
-              {equipoVisitante.jugadores.map((jugador, index) => (
+              {equipoVisitante.jugadores.slice(0, 5).map((jugador, index) => (
                 <JugadorCard
                   key={index}
                   nombre={jugador}
